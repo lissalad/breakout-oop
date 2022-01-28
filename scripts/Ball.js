@@ -1,7 +1,7 @@
 import Sprite from './Sprite.js'
 
 class Ball extends Sprite {
-  constructor(x, y, radius, color) {
+  constructor(x, y, radius = 10, color = 'lime') {
     super(x, y, radius * 2, radius * 2, color)
 
     this.radius = radius;
@@ -16,6 +16,8 @@ class Ball extends Sprite {
     ctx.fill();
     ctx.closePath();
   }
+
+  
 }
 
 export default Ball

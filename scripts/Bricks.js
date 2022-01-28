@@ -1,5 +1,4 @@
-import Sprite from './Sprite.js'
-import Brick from './Sprite.js'
+import Brick from './Brick.js'
 
 class Bricks {
   constructor(rows = 3, cols = 5) {

@@ -1,19 +1,18 @@
-import Sprite from './Sprite.js'
-import Score from './Score.js'
-import Lives from './Lives.js'
+class GameLabel {
+  constructor(canvasWidth, color = 'black', font = '16px Helvetica') {
+    this.canvasWidth = canvasWidth;
+    this.color = color,
+    this.font = font;
 
-class GameLabel extends Sprite {
-  constructor(x, y, text, font='16px Helvetica', color = 'red', align = 'left') {
-    // call super with properties as you would initialize sprite
-    // define the new properties here on this: this.text and this.font
-
+    this.lives = 3;
+    this.score = 0;
   }
 
   render(ctx) {
-    // Add the code here to draw your text label
-    // set the font: with ctx.font = this.font
-    // Align the text with ctx.textAlign = this.align
-    // ...
+    ctx.font = '16px Arial';
+    ctx.fillStyle = this.color;
+    ctx.fillText(`Lives: ${this.lives}`, this.canvasWidth - 65, 20);
+    ctx.fillText(`Score: ${this.score}`, 8, 20);
   }
 }
 export default GameLabel
