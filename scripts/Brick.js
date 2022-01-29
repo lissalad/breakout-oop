@@ -5,5 +5,6 @@ class Brick extends Sprite {
     super(x, y, width, height, color);
     this.status = 1;
   }
+
 }
 export default Brick

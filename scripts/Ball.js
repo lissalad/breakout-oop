@@ -17,7 +17,6 @@ class Ball extends Sprite {
     ctx.closePath();
   }
 
-  
 }
 
 export default Ball

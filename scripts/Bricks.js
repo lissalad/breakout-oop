@@ -13,6 +13,8 @@ class Bricks {
       this.bricks[c] = [];
       for (let r = 0; r < this.rows; r += 1) {
         const brick = new Brick()
+        this.brickWidth = brick.width;
+        this.brickHeight = brick.height;
         brick.x = (c * (brick.width + 10)) + 30;
         brick.y = (r * (brick.height + 10)) + 30;
         this.bricks[c][r] = brick;
