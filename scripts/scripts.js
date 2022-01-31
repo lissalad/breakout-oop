@@ -13,8 +13,6 @@ const paddleHeight = 10;
 const paddleWidth = 75;
 
 let paddleX = (canvas.width - paddleWidth) / 2;
-let lives = 3;
-let score = 0;
 
 let rightPressed = false;
 let leftPressed = false;
@@ -58,11 +56,11 @@ function moveBall(ball) {
   if (ball.y + ball.dy < ball.radius) {
     ball.dy = -ball.dy;
   } else if (ball.y + ball.dy > canvas.height - ball.radius) {
-    if (ball.x > paddleX && ball.x < paddleX + paddleWidth) {
+    if (ball.x > paddle.x && ball.x < paddle.x + paddle.width) {
       ball.dy = -ball.dy;
     } else {
       gameLabel.lives -= 1;
-      if (gameLabel.lives === 0) {
+      if (gameLabel.lives < 0) {
         // eslint-disable-next-line no-alert
         alert('GAME OVER');
         document.location.reload();
@@ -79,28 +77,26 @@ function moveBall(ball) {
   }
 }
 
-// ---------------- DETECT COLLISIONS ---------------------- //
-function collisionDetection() {
+function collisionDetection(bricks, ball, gameLabel) {
   for (let c = 0; c < bricks.cols; c += 1) {
     for (let r = 0; r < bricks.rows; r += 1) {
-      const b = bricks.bricks[c][r];
-      if (b.status === 1) {
-        if (ball.x > b.x && ball.x < b.x + bricks.brickWidth && ball.yy > b.y && ball.y < b.y + bricks.brickHeight) {
+      if(bricks.bricks[c][r].status == 1)
+        if (ball.x > bricks.bricks[c][r].x && ball.x < bricks.bricks[c][r].x + bricks.bricks[c][r].width && ball.y > bricks.bricks[c][r].y && ball.y < bricks.bricks[c][r].y + bricks.bricks[c][r].height) {
+          console.log(bricks.bricks[c][r]);
           ball.dy = -ball.dy;
-          b.status = 0;
+          bricks.bricks[c][r].status = 0;
           gameLabel.score += 1;
-          bricks.bricks[c][r] = b;
-
-          if (gameLabel.score === bricks.rows * bricks.cols) {
-            // eslint-disable-next-line no-alert
-            alert('YOU WIN, CONGRATS!');
-            document.location.reload();
-            // eslint-disable-next-line no-use-before-define
-            requestAnimationFrame(draw()); // Needed for Chrome to end game
-          }
         }
-      }
     }
+  }
+  if (gameLabel.score === bricks.rows * bricks.cols) {
+    // gameLabel.render(ctx);
+    // eslint-disable-next-line no-alert
+    alert('YOU WIN, CONGRATS!');
+    gameLabel.score = 0;
+    document.location.reload();
+    // eslint-disable-next-line no-use-before-define
+    // requestAnimationFrame(draw()); // Needed for Chrome to end game
   }
 }
 
@@ -108,14 +104,14 @@ function collisionDetection() {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // white background
 
-  gameLabel.render(ctx);
-  paddle.render(ctx, canvas.height);
   bricks.render(ctx);
   ball.render(ctx);
+  paddle.render(ctx, canvas.height);
+  gameLabel.render(ctx);
 
   moveBall(ball);
-  collisionDetection(ball);
-  
+  collisionDetection(bricks, ball, gameLabel);  
+
   if (rightPressed) { paddle.x += 7; } else if (leftPressed) { paddle.x -= 7; }
   ball.x += ball.dx;
   ball.y += ball.dy;

@@ -4,7 +4,7 @@ class GameLabel {
     this.color = color,
     this.font = font;
 
-    this.lives = 3;
+    this.lives = 2;
     this.score = 0;
   }
 
